@@ -20,7 +20,7 @@ grunt.loadNpmTasks('grunt-mamp');
 ## The "mamp" task
 
 ### The Goods
-Configure your site_full_path and you are good to go.
+Configure your site_full_path and you are good to go.  Your Gruntfile.js should look like this:
 
 ```js
 "use strict";
