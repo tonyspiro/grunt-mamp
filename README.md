@@ -29,7 +29,7 @@ module.exports = function(grunt){
 
   /* !!!! CONFIGURE !!!!
   ====================================================  */
-  var site_full_path = ''; // full path to your site files to be served by MAMP (must begin with '/').
+  var site_full_path = '/your/full/site/path';
 
   /* Init
   ====================================================  */
