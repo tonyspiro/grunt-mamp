@@ -70,7 +70,8 @@ module.exports = function(grunt){
 
 ### Getting Started (and Stopped!)
 Once you have your Gruntfile.js file configged, you can run the fooling commands to config, start and stop MAMP.
-```grunt config
+```
+grunt config
 grunt start
 grunt stop
 ```
