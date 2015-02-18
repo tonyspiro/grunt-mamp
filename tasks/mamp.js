@@ -15,15 +15,16 @@ module.exports = function(grunt) {
     var target = this.target;
 	  var options = this.data.options;
 	  var site_full_path = options.site_full_path;
+	  var port = options.port;
 	  
 	  if(target == 'configserver'){
-	  	var command = "sed 's%$path%" + site_full_path + "%g' node_modules/grunt-mamp/httpd.conf-template > /Applications/MAMP/conf/apache/httpd.conf";
-	  	console.log('Configuring mamp server at ' + site_full_path);
+	  	var command = "sed -e 's%$path%" + site_full_path + "%g' -e 's%$port%" + port + "%g' node_modules/grunt-mamp/httpd.conf-template > /Applications/MAMP/conf/apache/httpd.conf";
+	  	console.log('Configuring mamp server to point to ' + site_full_path + ' at http://localhost:'+ port);
 	  }
 
 	  if(target == 'startserver'){
 	  	var command = '/Applications/MAMP/bin/start.sh';
-	  	console.log('Starting mamp server at ' + site_full_path);
+	  	console.log('Starting mamp server at http://localhost:'+ port);
 	  }
 
 	  if(target == 'stopserver'){

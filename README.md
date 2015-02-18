@@ -24,52 +24,52 @@ Configure your site_full_path and you are good to go.  Your Gruntfile.js should 
 
 ```js
 "use strict";
-
+ 
 module.exports = function(grunt){
-
+ 
   /* !!!! CONFIGURE !!!!
   ====================================================  */
-  var site_full_path = '/your/full/site/path';
-
+  var site_full_path = '/your/full/site/path'; // something like /Users/username/sites/mymampsite
+  var port = 8888;
+ 
   /* Init
   ====================================================  */
   grunt.initConfig({
-
+ 
     mamp : {
       
       configserver : {
         options : {
-          site_full_path : site_full_path
+          site_full_path : site_full_path,
+          port : port
         }
       },
-
+ 
       startserver : {
         options : {
-          site_full_path : site_full_path
+          site_full_path : site_full_path,
+          port : port
         }
       },
       
       stopserver : {
-        options : {
-          site_full_path : site_full_path
-        }
       }
     }
-
+ 
   });
-
+ 
   grunt.loadNpmTasks('grunt-mamp');
-
-  // Register tasks
+ 
+  // Register tasks 
   grunt.registerTask("start", ["mamp:startserver"]);
   grunt.registerTask("stop", ["mamp:stopserver"]);
   grunt.registerTask("config", ["mamp:configserver"]);
-
+ 
 };
 ```
 
 ### Getting Started (and Stopped!)
-Once you have your Gruntfile.js file configged, you can run the fooling commands to config, start and stop MAMP.
+Once you have your Gruntfile.js file configged, you can run the following commands to config, start and stop MAMP.
 ```
 grunt config
 grunt start
