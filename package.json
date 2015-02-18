@@ -1,7 +1,7 @@
 {
   "name": "grunt-mamp",
   "description": "Grunt MAMP alows you to configure, start and stop your mamp server from the terminal.",
-  "version": "0.1.121",
+  "version": "0.1.122",
   "homepage": "https://github.com/tonyspiro/grunt-mamp",
   "author": {
     "name": "Tony Spiro",
