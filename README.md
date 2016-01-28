@@ -20,7 +20,7 @@ grunt.loadNpmTasks('grunt-mamp');
 ## The "mamp" task
 
 ### The Goods
-Configure your site_full_path and you are good to go.  Your Gruntfile.js should look like this:
+Configure your **path** and **user** and you are good to go.  Your Gruntfile.js should look like this:
 
 ```js
 "use strict";
@@ -29,7 +29,8 @@ module.exports = function(grunt){
  
   /* !!!! CONFIGURE !!!!
   ====================================================  */
-  var site_full_path = '/your/full/site/path'; // something like /Users/username/sites/mymampsite
+  var user = 'yourUsername'
+  var path = '/relative/or/absolute/path';
   var port = 8888;
  
   /* Init
@@ -40,14 +41,18 @@ module.exports = function(grunt){
       
       configserver : {
         options : {
-          site_full_path : site_full_path,
+          user : user,
+          path : path,
+          pathRelative : true,
           port : port
         }
       },
  
       startserver : {
         options : {
-          site_full_path : site_full_path,
+          user : user,
+          path : path,
+          pathRelative : true,
           port : port
         }
       },
