@@ -45,7 +45,7 @@ PidFile logs/httpd.pid
 # prevent Apache from glomming onto all bound IP addresses.
 #
 #Listen 12.34.56.78:80
-Listen 8888
+Listen $port
 
 #
 # Dynamic Shared Object (DSO) Support
@@ -80,7 +80,6 @@ LoadModule dbd_module modules/mod_dbd.so
 LoadModule bucketeer_module modules/mod_bucketeer.so
 LoadModule dumpio_module modules/mod_dumpio.so
 LoadModule echo_module modules/mod_echo.so
-LoadModule example_module modules/mod_example.so
 LoadModule case_filter_module modules/mod_case_filter.so
 LoadModule case_filter_in_module modules/mod_case_filter_in.so
 LoadModule reqtimeout_module modules/mod_reqtimeout.so
@@ -131,8 +130,9 @@ LoadModule alias_module modules/mod_alias.so
 LoadModule rewrite_module modules/mod_rewrite.so
 LoadModule perl_module modules/mod_perl.so
 LoadModule wsgi_module modules/mod_wsgi.so
+LoadModule xsendfile_module modules/mod_xsendfile.so
 
-LoadModule php5_module        /Applications/MAMP/bin/php/php5.6.2/modules/libphp5.so
+LoadModule php5_module        /Applications/MAMP/bin/php/php5.6.10/modules/libphp5.so
 
 #
 AddType application/x-httpd-php .php .phtml
@@ -147,8 +147,14 @@ AddType application/x-httpd-php .php .phtml
 # It is usually good practice to create a dedicated user and group for
 # running httpd, as with most system services.
 #
+User $user
+Group #-1
 
 </IfModule>
+</IfModule>
+
+<IfModule xsendfile_module>
+    XSendFile on
 </IfModule>
 
 # 'Main' server configuration
@@ -177,7 +183,7 @@ ServerAdmin you@example.com
 #
 # If your host doesn't have a registered DNS name, enter its IP address here.
 #
-ServerName localhost:8888
+ServerName localhost:$port
 
 #
 # DocumentRoot: The directory out of which you will serve your
@@ -238,6 +244,7 @@ DocumentRoot "$path"
     Order allow,deny
     Allow from all
 
+    XSendFilePath "$path"
 </Directory>
 
 #

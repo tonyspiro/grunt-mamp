@@ -10,6 +10,7 @@
 
 var fs = require('fs');
 var cp = require('child_process');
+var cwd = require('path');
 
 module.exports = function(grunt) {
 
@@ -17,31 +18,32 @@ module.exports = function(grunt) {
     
     var target = this.target;
 	  var options = this.data.options;
+
+	  var user = options.user;
+	  var port = options.port;
+	  var path = options.path;
+	 	if(options.pathRelative){
+	 		path = cwd.resolve() + "/" + options.path;
+	 	}
+	 	var command = "";
 	  
-	  if(target == 'configserver'){
-	  	var site_full_path = options.site_full_path;
-		  var port = options.port;
-		  // check if folder exists
-		  if (fs.existsSync(site_full_path)) {
-			 	var command = "sed -e 's%$path%" + site_full_path + "%g' -e 's%$port%" + port + "%g' node_modules/grunt-mamp/httpd.conf-template > /Applications/MAMP/conf/apache/httpd.conf";
-	  		console.log('Configuring mamp server to point to ' + site_full_path + ' at http://localhost:'+ port);
+	  if(target === 'configserver'){
+			if (fs.existsSync(path)) {
+			 	command = "sed -e 's%$path%" + path + "%g' -e 's%$port%" + port + "%g' -e 's%$user%" + user + "%g' node_modules/grunt-mamp/httpd.conf-template > /Applications/MAMP/conf/apache/httpd.conf";
+	  		console.log('Configuring mamp server to point to ' + path + ' at http://localhost:'+ port);
 			} else {
-				var message = 'Site full path not found.';
-				grunt.log.error(message);
+				grunt.log.error('Site full path not found.');
 				return false;
 			}
-	  }
 
-	  if(target == 'startserver'){
-	  	var site_full_path = options.site_full_path;
-		  var port = options.port;
-	  	var command = '/Applications/MAMP/bin/start.sh';
+	  } else if (target === 'startserver'){
+	  	command = '/Applications/MAMP/bin/start.sh';
 	  	console.log('Starting mamp server at http://localhost:'+ port);
-	  }
 
-	  if(target == 'stopserver'){
-	  	var command = '/Applications/MAMP/bin/stop.sh';
+	  } else if (target === 'stopserver'){
+	  	command = '/Applications/MAMP/bin/stop.sh';
 	  	console.log('Stopping mamp server');
+	  	
 	  }
 	  
 		cp.exec(command, '', '');
